@@ -1,1 +1,28 @@
 
+You can use Python to check the ping status for multiple servers using the `ping` command and the `subprocess` module. Here's a basic example to get you started:
+
+```python
+import subprocess
+
+# List of server IP addresses or hostnames
+servers = ["server1.com", "server2.com", "server3.com"]
+
+for server in servers:
+    try:
+        # Run the ping command and capture the output
+        result = subprocess.run(["ping", "-c", "4", server], stdout=subprocess.PIPE, text=True, check=True)
+
+        # Extract the ping results
+        ping_output = result.stdout
+
+        # Check if the server is reachable
+        if "0% packet loss" in ping_output:
+            print(f"{server} is reachable")
+        else:
+            print(f"{server} is unreachable")
+    except subprocess.CalledProcessError:
+        print(f"Error pinging {server}")
+
+```
+
+Make sure to replace the server list with the IP addresses or hostnames of the servers you want to check. This script sends four ICMP echo requests to each server and checks if there is 0% packet loss to determine if the server is reachable.
