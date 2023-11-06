@@ -1,27 +1,68 @@
 
-You can Creating a dashboard with 30 tables in HTML is a complex task that involves a lot of code. Here's a simplified example to get you started. You can expand on this template as needed:
+To display an HTML table in a book-like view on a web page, you can use CSS styles to create a visually appealing layout. Here's an example of how you can style an HTML table to resemble a book:
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard with 30 Tables</title>
-    <style>
-        /* Add your CSS styling here */
-        table {
-            border-collapse: collapse;
-            width: 30%;
-            margin: 10px;
-        }
-        table, th, td {
-            border: 1px solid black;
-        }
-    </style>
+  <style>
+    /* Style for the book container */
+    .book-view {
+      width: 400px;
+      margin: 0 auto;
+      background-color: #f7f7f7;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Style for the table */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #333;
+      color: #fff;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    tr:hover {
+      background-color: #ddd;
+    }
+  </style>
 </head>
 <body>
-    <h1>Dashboard with 30 Tables</h1>
+  <div class="book-view">
+    <h1>Your Book Title</h1>
+    <table>
+      <tr>
+        <th>Header 1</th>
+        <th>Header 2</th>
+        <th>Header 3</th>
+      </tr>
+      <tr>
+        <td>Data 1</td>
+        <td>Data 2</td>
+        <td>Data 3</td>
+      </tr>
+      <!-- Add more rows here -->
+    </table>
+  </div>
+</body>
+</html>
+```
 
-    <div class="table-container">
+This code creates a book-like container for your HTML table with appropriate styling. You can customize it further to fit your specific needs.
         <table>
             <caption>Table 1</caption>
             <tr>
