@@ -1,0 +1,65 @@
+If you want to read not only the table data but also the table headers from JSON data and render dynamic tables in your Flask application, you can modify the previous example to include the table headers in the JSON data. Here's an updated example:
+
+```python
+from flask import Flask, render_template
+
+app = Flask(__name)
+
+# Sample JSON data (including table headers)
+json_data = {
+    "tables": {
+        "table1": {
+            "headers": ["Column 1", "Column 2"],
+            "data": [
+                ["Value 1", "Value 2"],
+                ["Value 3", "Value 4"],
+            ],
+        },
+        "table2": {
+            "headers": ["Column A", "Column B"],
+            "data": [
+                ["Value A", "Value B"],
+                ["Value C", "Value D"],
+            ],
+        },
+    }
+}
+
+@app.route('/tables')
+def render_tables():
+    return render_template('tables.html', data=json_data)
+```
+
+You can see that the JSON structure now includes both the headers and the data for each table.
+
+Next, you can modify the HTML template (`tables.html`) to dynamically render the tables and headers based on the JSON data:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dynamic Tables</title>
+</head>
+<body>
+    {% for table_name, table_data in data['tables'].items() %}
+    <h1>{{ table_name }}</h1>
+    <table>
+        <tr>
+            {% for header in table_data['headers'] %}
+            <th>{{ header }}</th>
+            {% endfor %}
+        </tr>
+        {% for row in table_data['data'] %}
+        <tr>
+            {% for cell in row %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+</body>
+</html>
+```
+
+With this updated code, your Flask application will read both the table headers and data from the JSON structure and render dynamic tables with the provided headers and data. When you access the `/tables` route in your web browser, you'll see the tables with their respective headers and data.
