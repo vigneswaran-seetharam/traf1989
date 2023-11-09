@@ -63,3 +63,21 @@ Next, you can modify the HTML template (`tables.html`) to dynamically render the
 ```
 
 With this updated code, your Flask application will read both the table headers and data from the JSON structure and render dynamic tables with the provided headers and data. When you access the `/tables` route in your web browser, you'll see the tables with their respective headers and data.
+
+
+Certainly! You can use the `subprocess` module to ping a server and then store the result in a list. Here's a simple example:
+
+```python
+import subprocess
+
+servers = ["example.com", "google.com"]
+ping_results = []
+
+for server in servers:
+    result = subprocess.run(["ping", "-c", "4", server], capture_output=True, text=True)
+    ping_results.append(result.stdout)
+
+print(ping_results)
+```
+
+This code pings each server four times and appends the output to the `ping_results` list.
