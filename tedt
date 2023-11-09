@@ -1,4 +1,4 @@
-If you want to read not only the table data but also the table headers from JSON data and render dynamic tables in your Flask application, you can modify the previous example to include the table headers in the JSON data. Here's an updated example:
+7If you want to read not only the table data but also the table headers from JSON data and render dynamic tables in your Flask application, you can modify the previous example to include the table headers in the JSON data. Here's an updated example:
 
 ```python
 from flask import Flask, render_template
@@ -81,3 +81,28 @@ print(ping_results)
 ```
 
 This code pings each server four times and appends the output to the `ping_results` list.
+
+Certainly! You can use the `concurrent.futures` module to implement multithreading for parallel execution. Here's an example:
+
+```python
+import concurrent.futures
+import subprocess
+
+servers = ["example.com", "google.com"]
+ping_results = []
+
+def ping_server(server):
+    result = subprocess.run(["ping", "-c", "4", server], capture_output=True, text=True)
+
+    if result.returncode == 0:
+        ping_results.append({"server": server, "status": "Success", "output": result.stdout})
+    else:
+        ping_results.append({"server": server, "status": "Failure", "output": result.stderr})
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    executor.map(ping_server, servers)
+
+print(ping_results)
+```
+
+This code uses a thread pool to concurrently ping multiple servers, improving the overall execution time.
