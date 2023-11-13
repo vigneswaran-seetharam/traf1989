@@ -145,3 +145,84 @@ with ThreadPoolExecutor(max_workers=num_threads) as executor:
 Replace the placeholder URLs in the `urls` list with your actual URLs. This script uses a thread pool to fetch the URLs concurrently. Adjust the `num_threads` variable based on your needs, considering system limitations.
 
 Note: Be mindful of web scraping policies and make sure you're allowed to access and monitor the provided URLs. Additionally, handling large numbers of parallel requests may require careful consideration to avoid overloading servers and potential IP bans.
+
+
+To achieve this, you can use a combination of HTML, CSS, and potentially JavaScript. Here's a basic example:
+
+1. **HTML**: Create a table structure in your HTML file.
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <title>CSV Table with Cell Color</title>
+</head>
+<body>
+  <table id="data-table">
+    <!-- Your CSV data will be inserted here -->
+  </table>
+  <script src="script.js"></script>
+</body>
+</html>
+```
+
+2. **CSS**: Style your table and define CSS classes for different cell colors.
+
+```css
+/* styles.css */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
+/* Define classes for different cell colors */
+.red-cell {
+  background-color: red;
+}
+
+.green-cell {
+  background-color: green;
+}
+```
+
+3. **JavaScript**: Read your CSV file, parse it, and dynamically generate the table with appropriate cell colors.
+
+```js
+// script.js
+document.addEventListener('DOMContentLoaded', function () {
+  // Replace 'yourdata.csv' with the path to your CSV file
+  fetch('yourdata.csv')
+    .then(response => response.text())
+    .then(data => {
+      const rows = data.split('\n');
+      const table = document.getElementById('data-table');
+
+      rows.forEach(row => {
+        const cells = row.split(',');
+        const newRow = table.insertRow();
+
+        cells.forEach(cell => {
+          const newCell = newRow.insertCell();
+          newCell.textContent = cell;
+
+          // Change cell color based on the string value
+          if (cell.includes('your_string')) {
+            newCell.classList.add('red-cell');
+          } else if (cell.includes('another_string')) {
+            newCell.classList.add('green-cell');
+          }
+        });
+      });
+    });
+});
+```
+
+Make sure to replace 'yourdata.csv' with the actual path to your CSV file and adjust the string comparisons in the JavaScript code based on the criteria you want for cell coloring. This is a basic example, and you may need to modify it based on your specific use case and data format.
+
