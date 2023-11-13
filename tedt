@@ -1,4 +1,4 @@
-7If you want to read not only the table data but also the table headers from JSON data and render dynamic tables in your Flask application, you can modify the previous example to include the table headers in the JSON data. Here's an updated example:
+67If you want to read not only the table data but also the table headers from JSON data and render dynamic tables in your Flask application, you can modify the previous example to include the table headers in the JSON data. Here's an updated example:
 
 ```python
 from flask import Flask, render_template
@@ -106,3 +106,42 @@ print(ping_results)
 ```
 
 This code uses a thread pool to concurrently ping multiple servers, improving the overall execution time.
+
+
+To monitor 100 URLs in parallel using Python, you can leverage the `concurrent.futures` module. Here's a simple example using the `ThreadPoolExecutor`:
+
+```python
+import requests
+from concurrent.futures import ThreadPoolExecutor, as_completed
+
+# Function to fetch a URL and print its status code
+def fetch_url(url):
+    try:
+        response = requests.get(url)
+        print(f"{url} - Status Code: {response.status_code}")
+    except Exception as e:
+        print(f"{url} - Error: {e}")
+
+# List of URLs to monitor
+urls = ["https://example.com", "https://google.com", ...]  # Add your 100 URLs here
+
+# Set the number of parallel threads (adjust as needed)
+num_threads = min(100, len(urls))
+
+# Use ThreadPoolExecutor to execute the fetch_url function in parallel
+with ThreadPoolExecutor(max_workers=num_threads) as executor:
+    # Submit tasks and get futures
+    futures = [executor.submit(fetch_url, url) for url in urls]
+
+    # Wait for all tasks to complete
+    for future in as_completed(futures):
+        # Handle exceptions if any
+        try:
+            future.result()
+        except Exception as e:
+            print(f"Exception: {e}")
+```
+
+Replace the placeholder URLs in the `urls` list with your actual URLs. This script uses a thread pool to fetch the URLs concurrently. Adjust the `num_threads` variable based on your needs, considering system limitations.
+
+Note: Be mindful of web scraping policies and make sure you're allowed to access and monitor the provided URLs. Additionally, handling large numbers of parallel requests may require careful consideration to avoid overloading servers and potential IP bans.
